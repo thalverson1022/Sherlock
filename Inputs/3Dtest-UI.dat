@@ -1,0 +1,19 @@
+20.0d0
+1
+./Points/test.dat
+
+
+
+
+
+
+
+-----------------------------------------------------------
+                     File Format
+-----------------------------------------------------------
+Line 1: <Ecut> Energy cutoff value
+Line 2: <mtype> m-Grid Shift setting, 1
+                = 1 half integer shift
+                = 2 whole integer shift
+Line 3: <output filename> name and directory for output file
+ 
