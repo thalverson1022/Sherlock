@@ -1,0 +1,19 @@
+./PEs/3Dtest_PE.dat
+./Masses/3Dtest-masses.dat
+./Maxes/3Dtest-maxes_HI.dat
+./Starts/3Dtest-start_HI.in
+./Inputs/3Dtest-UI.dat
+
+
+
+-----------------------------------------------------------
+                     File Format
+-----------------------------------------------------------
+Line 1: Directory location and file name of the Potential Energy
+Line 2: Directory location and file name of particle masses
+Line 3: Directory location and file name of phase space grid limitations
+Line 4: Directory location and file name of initial starting point
+Line 3: Directory location and file name of user inputs
+ 
+
+ 
