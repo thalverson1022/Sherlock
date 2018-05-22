@@ -1,0 +1,102 @@
+Sherlock v2.0
+Created By: Thomas Halverson
+ 
+This code uses a modified A* algorithm to find all of the phase space points below an energy 
+cutoff for a given Hamiltonian.
+
+Ecut <= H(x1,p1,...,xn,pn) 
+
+It creates the input files for the Switchblade diagonlaiztion code. 
+
+
+
+Compile Instructions:
+   A compile script is provided (compile.sh). There are only two source code files, one for 
+   the main code and the other for the modules. THe code can easily be compile without the 
+   script since no compiler flags should be needed.
+
+Running Instructions:
+   The only input file to be specified at runtime is .in file, which contains the file 
+   location and names of the each of the needed input files. Once this file is created
+   for a given system, it will not need to be modified.
+
+   Test Case:
+     This code conatins a simple test case for a coupled, three dimensional anharmoic
+     oscillator. To run is test case, simply use the input file <test.in>. The parameters 
+     can be changed in the -UI file <3Dtest-UI.dat> (see below for more details). 
+   
+     If compiled using the compile script, the test case can be run simply with
+
+       ./sherlock ./test.in
+    
+
+User Inputs:
+   The file designated with the -UI tag is the user input file. This file copntains the 
+   adjustable paramters. Once all of the inputs for a specifc system are created,the user 
+   should only interact with this file. 
+   
+   The file contains three user inputs (as indicated in the test example).
+
+      1. Energy Cutoff is the value that defines the outer edge of the Hamiltonian contour.
+         In other words, the is the truncation parameter and should be adjusted to define a 
+         specific basis size for the given problem. 
+
+      2. The mtype flag defines whether the the x-grid is defined at whole integer values 
+         or half integer spacing. Seperate system files need to be created for each typoe of 
+         grid, so we must be careful when switching this flag. Files for whole integer have
+         the desigation -WI and those for half integer are designated with -HI. The test 
+         system is only set up for -HI, so for that example this flag should remain 1.
+
+      3. The filename is simple the name and location of the output.
+
+
+System Files:
+
+    Each new physical system requires a series of system files, created with the proper grid
+    type in mind. There are four directories, each of which contains a system file for a given 
+    system. All system files MUST be specified or the code will crash. 
+
+    ./Masses
+
+       This file contains a list of 'n' numbers (n=number of modes), which corresponds to 
+       1/(2*<particle mass>). The numbers must be in the same order as the harmonic frequencies 
+       see below).
+
+       Example:
+         For the test case, the mass file <3Dtest-masses.dat> contains the number 1.0d0 three 
+         times, corresponding to three modes. Since the test case is a normal mode Hamiltonian, 
+         the masses are the same value as the harmonic frequencies.   
+
+
+    ./Maxes
+       
+      This file contains the hard limits on the coordinates. In cases where the PES is only 
+      valid in a certain range, these values can be used to limited the search distance, either 
+      by a harmonic radius or since coordinate limits. 
+
+      Example:
+        The test case is a single well anharmonic potential, therefore the hard limits are set to 
+        be those of the single dimensional hard limits: +/-20. The radius is set to also be this 
+        limit: +20   
+
+    
+    ./PEs
+
+      THis code usitlizes 4th order Taylor series expanded normal mode coordinates. The PES 
+      file contains the coefficents of those expansions.
+
+      Example:
+        The test case PES, <3DTest_PE.dat>, has the following format:
+
+        <number of modes>  <number of coefficients>
+        <x1 power> <x2 power> <x3 power>    <coefficient>
+
+
+    ./Starts 
+
+      These files contain the starting point, in phase space, where the search begins. 
+
+      Example:
+        The test case is a deep well centered at the origin, so we use the origin as the starting point. 
+        However, since we are on a half integer grid in x, the starting point is 
+         (.5,.5,.5.,5,.5,.5)
